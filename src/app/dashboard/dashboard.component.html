@@ -1,0 +1,16 @@
+<div class="container">
+  <div>
+    <ngx-charts-bar-vertical
+    [view]="[1000,400]"
+    [customColors]="customColor"
+    [results]="saleData"
+    [gradient]="true"
+    [animations]="false"
+    [tooltipDisabled]="true"
+    [noBarWhenZero]="false">
+    </ngx-charts-bar-vertical>
+  </div>
+</div>
+
+
+<button (click)="submit()">test</button>
