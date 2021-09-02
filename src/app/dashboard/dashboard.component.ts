@@ -35,7 +35,7 @@ export class DashboardComponent implements OnInit {
 
   getColor(saleData:any){
     return saleData.map((v,i)=> {
-      return {name: i + '', value: '#0F5298'}
+      return {name: i + '', value: '#007BFF'}
     })
   }
 
@@ -89,8 +89,8 @@ export class DashboardComponent implements OnInit {
         }
         else{
           await this.wait(this.mintime);
-          this.changeColor(saleData[j]["name"], '#0F5298');
-          this.changeColor(saleData[j+1]["name"], '#0F5298');
+          this.changeColor(saleData[j]["name"], '#007BFF');
+          this.changeColor(saleData[j+1]["name"], '#007BFF');
           this.customColor = [...this.customColor];
         }
       }
@@ -113,8 +113,8 @@ export class DashboardComponent implements OnInit {
             minimum_index = j;
           }
           await this.wait(this.mintime);
-          this.changeColor(saleData[i]["name"], '#0F5298');
-          this.changeColor(saleData[j]["name"], '#0F5298');
+          this.changeColor(saleData[i]["name"], '#007BFF');
+          this.changeColor(saleData[j]["name"], '#007BFF');
           this.customColor = [...this.customColor];
         }
         if(i!=minimum_index){
@@ -135,8 +135,8 @@ export class DashboardComponent implements OnInit {
     temp[j]["value"] =temp1;
     this.saleData = [...temp];
     await this.wait(this.mintime);
-    this.changeColor(temp[i]["name"], '#0F5298');
-    this.changeColor(temp[j]["name"], '#0F5298');
+    this.changeColor(temp[i]["name"], '#007BFF');
+    this.changeColor(temp[j]["name"], '#007BFF');
     this.customColor = [...this.customColor];
   }
 }

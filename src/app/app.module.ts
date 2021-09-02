@@ -8,12 +8,14 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { DarkmodeComponent } from './darkmode/darkmode.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LayoutComponent,
-    DashboardComponent
+    DashboardComponent,
+    DarkmodeComponent
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,9 @@
 <div class="container">
   <div>
+    <app-darkmode></app-darkmode>
+  </div>
+
+  <div>
     <ngx-charts-bar-vertical
     [view]="[1000,400]"
     [customColors]="customColor"
@@ -9,11 +13,14 @@
     [tooltipDisabled]="true"
     [yAxis]="true"
     [showGridLines]="false"
-    [noBarWhenZero]="false">
+    [noBarWhenZero]="false"
+    style="fill: #007BFF;">
     </ngx-charts-bar-vertical>
   </div>
 </div>
 
+<div>
+  <button (click)="submit()" >test</button>
+  <button (click)="shuffle()" >shuffle</button>
+</div>
 
-<button (click)="submit()" >test</button>
-<button (click)="shuffle()" >shuffle</button>
