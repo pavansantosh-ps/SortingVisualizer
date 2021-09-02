@@ -12,6 +12,7 @@ import { take } from 'rxjs/operators';
 export class DashboardComponent implements OnInit {
 
   constructor(private zone:NgZone) { }
+
   allAlgos = [
     'Selection Sort',
     'Bubble Sort',
@@ -45,8 +46,55 @@ export class DashboardComponent implements OnInit {
     })
   }
 
+  wait(ms) {
+    return timer(ms).pipe(take(1)).toPromise();
+  }
+
+  changeColor(name, color = 'red') {
+    let temp = this.customColor;
+    let elementWithName = null;
+    for(let ele of this.customColor) {
+      if(ele?.name == name) {
+        elementWithName = ele;
+      }
+    }
+    if(elementWithName) {
+      elementWithName.value = color;
+    }
+  }
+
+  shuffle(){
+    window.location.reload()
+  }
+
   submit(){
-    this.selectionSort(this.saleData);
+    this.bubbleSort(this.saleData);
+  }
+
+  async bubbleSort(saleData: any[]){
+    var i, j;
+    const n = saleData.length;
+    for (i = 0; i < n; i++)
+    {
+      for (j = 0; j < n-i-1; j++)
+      {
+        this.changeColor(saleData[j]["name"]);
+        this.changeColor(saleData[j+1]["name"]);
+        this.customColor = [...this.customColor];
+        await this.wait(this.mintime);
+        if (saleData[j]["value"] > saleData[j+1]["value"])
+        {
+          this.swap(j,j+1);
+          await this.wait(2*this.mintime);
+        }
+        else{
+          await this.wait(this.mintime);
+          this.changeColor(saleData[j]["name"], '#0F5298');
+          this.changeColor(saleData[j+1]["name"], '#0F5298');
+          this.customColor = [...this.customColor];
+        }
+      }
+    }
   }
 
   async selectionSort(saleData: any[]) {
@@ -91,21 +139,7 @@ export class DashboardComponent implements OnInit {
     this.changeColor(temp[j]["name"], '#0F5298');
     this.customColor = [...this.customColor];
   }
-
-  wait(ms) {
-    return timer(ms).pipe(take(1)).toPromise();
-  }
-
-  changeColor(name, color = 'red') {
-    let temp = this.customColor;
-    let elementWithName = null;
-    for(let ele of this.customColor) {
-      if(ele?.name == name) {
-        elementWithName = ele;
-      }
-    }
-    if(elementWithName) {
-      elementWithName.value = color;
-    }
-  }
 }
+
+
+
