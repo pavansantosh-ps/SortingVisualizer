@@ -68,24 +68,64 @@ export class DashboardComponent implements OnInit {
   }
 
   submit(){
-    this.mergeSort(this.saleData,0,this.saleData.length-1);
+    this.mergeSorter();
   }
+
+  async mergeSorter() {
+    await this.mergeSort(this.saleData,0,this.saleData.length-1);
+  }
+
+
   async mergeSort(a: any[], f: number, l: number) {
     if( f < l){
-      const m = parseInt((f + l) / 2 + '');
+      var m = parseInt((f + l) / 2 + '');
       await this.mergeSort(a, f, m);
       await this.mergeSort(a, m + 1, l);
       await this.merge(a, f, m, l);
     }
   }
 
-  merge(a: any[], f: number, m: number, l: number) {
-    
+  async merge(arr: any[], f: number, m: number, l: number) {
+    var i,j,k;
+    var n1 = m - f + 1;
+    var n2 = l - m;
+    var L,M;
+    for ( i = 0; i < n1; i++)
+        L[i] = arr[f + i];
+    for ( j = 0; j < n2; j++)
+        M[j] = arr[m + 1 + j];
+
+    i = 0;
+    j = 0;
+    k = f;
+
+    while (i < n1 && j < n2) {
+      if (L[i] <= M[j]) {
+          arr[k] = L[i];
+          i++;
+      } else {
+          arr[k] = M[j];
+          j++;
+      }
+      k++;
+    }
+
+    while (i < n1) {
+      arr[k] = L[i];
+      i++;
+      k++;
+    }
+
+    while (j < n2) {
+        arr[k] = M[j];
+        j++;
+        k++;
+    }
   }
 
   async insertionSort(saleData: any[]) {
     var i, j, key;
-    const n = saleData.length;
+    var n = saleData.length;
     var temp;
     for (i = 1; i < n; i++)
     {
@@ -173,7 +213,7 @@ export class DashboardComponent implements OnInit {
   async swap(i,j){
     let temp = this.saleData;
     this.changeColor(temp[i]["name"]);
-    this.changeColor(temp[j]["name"]);
+    this.changeColor(temp[j]["name"], '#65B556');
     this.customColor = [...this.customColor];
     await this.wait(this.mintime);
     let temp1 = temp[i]["value"];
