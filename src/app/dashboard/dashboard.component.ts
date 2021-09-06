@@ -68,7 +68,53 @@ export class DashboardComponent implements OnInit {
   }
 
   submit(){
-    this.bubbleSort(this.saleData);
+    this.mergeSort(this.saleData,0,this.saleData.length-1);
+  }
+  async mergeSort(a: any[], f: number, l: number) {
+    if( f < l){
+      const m = parseInt((f + l) / 2 + '');
+      await this.mergeSort(a, f, m);
+      await this.mergeSort(a, m + 1, l);
+      await this.merge(a, f, m, l);
+    }
+  }
+
+  merge(a: any[], f: number, m: number, l: number) {
+    
+  }
+
+  async insertionSort(saleData: any[]) {
+    var i, j, key;
+    const n = saleData.length;
+    var temp;
+    for (i = 1; i < n; i++)
+    {
+      temp = [...saleData];
+      key = temp[i]["value"];
+      this.changeColor(saleData[i]["name"]);
+      this.customColor = [...this.customColor];
+      await this.wait(this.mintime);
+      j = i - 1;
+      while(j >= 0 && temp[j]["value"] > key){
+        this.changeColor(saleData[j]["name"]);
+        this.customColor = [...this.customColor];
+        await this.wait(this.mintime);
+        temp[j + 1]["value"] = temp[j]["value"];
+        this.changeColor(saleData[j]["name"], '#007BFF');
+        this.customColor = [...this.customColor];
+        await this.wait(this.mintime);
+        j--;
+      }
+      this.changeColor(saleData[j+1]["name"], '#65B556');
+      this.customColor = [...this.customColor];
+      await this.wait(this.mintime);
+      temp[j+1]["value"] = key;
+      this.saleData = [...temp];
+      this.changeColor(saleData[i]["name"], '#007BFF');
+      this.changeColor(saleData[j+1]["name"], '#007BFF');
+      this.customColor = [...this.customColor];
+      await this.wait(this.mintime);
+    }
   }
 
   async bubbleSort(saleData: any[]){
