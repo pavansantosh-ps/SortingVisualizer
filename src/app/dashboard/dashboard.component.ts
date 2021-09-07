@@ -25,7 +25,7 @@ export class DashboardComponent implements OnInit {
   numberOfElements;
   saleData = [];
   customColor = [];
-  mintime = 100;
+  mintime = 500;
   minsize = 10;
 
   ngOnInit(): void {
@@ -86,10 +86,11 @@ export class DashboardComponent implements OnInit {
   }
 
   async merge(arr: any[], f: number, m: number, l: number) {
-    var i,j,k;
-    var n1 = m - f + 1;
-    var n2 = l - m;
-    var L,M;
+
+    let i,j,k;
+    let n1 = m - f + 1;
+    let n2 = l - m;
+    let L = [],M = [];
     for ( i = 0; i < n1; i++)
         L[i] = arr[f + i];
     for ( j = 0; j < n2; j++)
@@ -100,27 +101,51 @@ export class DashboardComponent implements OnInit {
     k = f;
 
     while (i < n1 && j < n2) {
-      if (L[i] <= M[j]) {
-          arr[k] = L[i];
-          i++;
+      this.changeColor(L[i]["name"]);
+      this.changeColor(M[j]["name"]);
+      this.customColor = [...this.customColor];
+      await this.wait(this.mintime);
+      if (L[i]["value"] <= M[j]["value"]) {
+        this.changeColor(L[i]["name"], '#007BFF');
+        this.changeColor(M[j]["name"], '#007BFF');
+        this.customColor = [...this.customColor];
+        arr[k] = L[i];
+        arr[k]['name'] = k;
+        i++;
       } else {
-          arr[k] = M[j];
-          j++;
+        this.changeColor(arr[k]["name"], '#007BFF');
+        this.changeColor(M[j]["name"], '#007BFF');
+        this.customColor = [...this.customColor];
+        arr[k] = M[j];
+        arr[k]['name'] = k;
+        j++;
       }
       k++;
     }
 
     while (i < n1) {
+      this.changeColor(L[i]["name"], '#007BFF');
+      this.customColor = [...this.customColor];
       arr[k] = L[i];
+      arr[k]['name'] = k;
       i++;
       k++;
     }
 
     while (j < n2) {
-        arr[k] = M[j];
-        j++;
-        k++;
+      this.changeColor(L[j]["name"], '#007BFF');
+      this.customColor = [...this.customColor];
+      arr[k] = M[j];
+      arr[k]['name'] = k;
+      j++;
+      k++;
     }
+
+    for(let z= 0 ; z <  arr.length; z++) {
+      this.changeColor(arr[z]["name"], '#007BFF');
+      this.customColor = [...this.customColor];
+    }
+    this.saleData = [...arr];
   }
 
   async insertionSort(saleData: any[]) {
@@ -145,7 +170,7 @@ export class DashboardComponent implements OnInit {
         await this.wait(this.mintime);
         j--;
       }
-      this.changeColor(saleData[j+1]["name"], '#65B556');
+      this.changeColor(saleData[j+1]["name"], '#007BFF');
       this.customColor = [...this.customColor];
       await this.wait(this.mintime);
       temp[j+1]["value"] = key;
@@ -213,7 +238,7 @@ export class DashboardComponent implements OnInit {
   async swap(i,j){
     let temp = this.saleData;
     this.changeColor(temp[i]["name"]);
-    this.changeColor(temp[j]["name"], '#65B556');
+    this.changeColor(temp[j]["name"], '#007BFF');
     this.customColor = [...this.customColor];
     await this.wait(this.mintime);
     let temp1 = temp[i]["value"];
