@@ -25,7 +25,7 @@ export class DashboardComponent implements OnInit {
   numberOfElements;
   saleData = [];
   customColor = [];
-  mintime = 500;
+  mintime = 1000;
   minsize = 10;
 
   ngOnInit(): void {
@@ -68,9 +68,56 @@ export class DashboardComponent implements OnInit {
   }
 
   submit(){
-    this.mergeSorter();
+    this.quickSorter();
   }
 
+  // quickSort
+  async quickSorter() {
+    await this.quickSort(this.saleData,0,this.saleData.length-1);
+  }
+
+  async quickSort(arr: any[], f: number, l: number) {
+    var pivot = arr[f]["value"];
+    var p = f+1;
+    var q = l;
+    this.changeColor(arr[f]["name"], '#65B556');
+    this.customColor = [...this.customColor];
+    await this.wait(this.mintime);
+    while(q>p){
+      this.changeColor(arr[p]["name"]);
+      this.changeColor(arr[q]["name"]);
+      this.customColor = [...this.customColor];
+      await this.wait(this.mintime);
+      if(p<=l){
+        while(pivot > arr[p]["value"]){
+          this.changeColor(arr[p]["name"], '#007BFF');
+          this.customColor = [...this.customColor];
+          await this.wait(this.mintime);
+          p++;
+        }
+        if(q>=0){
+          while(pivot < arr[q]["value"]){
+            this.changeColor(arr[q]["name"], '#007BFF');
+            this.customColor = [...this.customColor];
+            await this.wait(this.mintime);
+            q--;
+          }
+        }
+      }
+      if(p<q){
+        this.swap(p,q);
+        await this.wait(this.mintime);
+      }
+    }
+    this.swap(f,q);
+    await this.wait(this.mintime);
+    if(f<l){
+      this.quickSort(arr,f,q-1);
+      this.quickSort(arr,q+1,l);
+    }
+  }
+
+  // mergeSort
   async mergeSorter() {
     await this.mergeSort(this.saleData,0,this.saleData.length-1);
   }
@@ -148,6 +195,7 @@ export class DashboardComponent implements OnInit {
     this.saleData = [...arr];
   }
 
+  // insertionSort
   async insertionSort(saleData: any[]) {
     var i, j, key;
     var n = saleData.length;
@@ -182,6 +230,7 @@ export class DashboardComponent implements OnInit {
     }
   }
 
+  // bubbleSort
   async bubbleSort(saleData: any[]){
     var i, j;
     const n = saleData.length;
@@ -208,6 +257,7 @@ export class DashboardComponent implements OnInit {
     }
   }
 
+  // sellectionSort
   async selectionSort(saleData: any[]) {
     var i, j, minimum_index;
     const n = saleData.length;
@@ -235,6 +285,7 @@ export class DashboardComponent implements OnInit {
     }
   }
 
+  // Swap of two elements
   async swap(i,j){
     let temp = this.saleData;
     this.changeColor(temp[i]["name"]);
