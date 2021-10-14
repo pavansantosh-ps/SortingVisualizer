@@ -25,8 +25,8 @@ export class DashboardComponent implements OnInit {
   numberOfElements;
   saleData = [];
   customColor = [];
-  mintime = 1000;
-  minsize = 10;
+  mintime = 100;
+  minsize = 15;
 
   ngOnInit(): void {
     this.saleData = this.getRandomList(this.minsize);
@@ -77,44 +77,36 @@ export class DashboardComponent implements OnInit {
   }
 
   async quickSort(arr: any[], f: number, l: number) {
-    var pivot = arr[f]["value"];
-    var p = f+1;
-    var q = l;
-    this.changeColor(arr[f]["name"], '#65B556');
+    if(f < l){
+      var pi = this.partition(arr, f, l);
+      await this.quickSort(arr, f, await pi - 1 );
+      await this.quickSort(arr, await pi + 1, l);
+    }
+  }
+
+  async partition(arr: any[], f: number, l: number) {
+    var pivot = arr[l]["value"];
+    this.changeColor(arr[l]["name"],'#63B154');
     this.customColor = [...this.customColor];
     await this.wait(this.mintime);
-    while(q>p){
-      this.changeColor(arr[p]["name"]);
-      this.changeColor(arr[q]["name"]);
+    var i = (f - 1);
+    for(let j = f; j <= l - 1; j++)
+    {
+      this.changeColor(arr[j]["name"]);
       this.customColor = [...this.customColor];
       await this.wait(this.mintime);
-      if(p<=l){
-        while(pivot > arr[p]["value"]){
-          this.changeColor(arr[p]["name"], '#007BFF');
-          this.customColor = [...this.customColor];
-          await this.wait(this.mintime);
-          p++;
-        }
-        if(q>=0){
-          while(pivot < arr[q]["value"]){
-            this.changeColor(arr[q]["name"], '#007BFF');
-            this.customColor = [...this.customColor];
+      this.changeColor(arr[j]["name"], '#007BFF');
+      this.customColor = [...this.customColor];
+        if (arr[j]["value"] < pivot)
+        {
+            i++;
+            this.swap(i,j);
             await this.wait(this.mintime);
-            q--;
-          }
         }
-      }
-      if(p<q){
-        this.swap(p,q);
-        await this.wait(this.mintime);
-      }
     }
-    this.swap(f,q);
+    this.swap(i + 1, l);
     await this.wait(this.mintime);
-    if(f<l){
-      this.quickSort(arr,f,q-1);
-      this.quickSort(arr,q+1,l);
-    }
+    return (i + 1);
   }
 
   // mergeSort
@@ -302,6 +294,4 @@ export class DashboardComponent implements OnInit {
     this.customColor = [...this.customColor];
   }
 }
-
-
 
