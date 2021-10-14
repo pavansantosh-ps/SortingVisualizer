@@ -1,3 +1,20 @@
 .manage{
   padding: 10px;
 }
+
+.box{
+  width: 100%;
+  margin-top: 15px;
+  height: 40px;
+  border-radius: 5px;
+  cursor:pointer;
+  color:black;
+  border:1px solid #ccc;
+}
+
+option{
+  /* background-color: #007BFF; */
+  border: 1px solid black;
+  /* color: #fff; */
+  border-radius: 5px;
+}

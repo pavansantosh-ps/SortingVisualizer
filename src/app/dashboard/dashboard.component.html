@@ -1,8 +1,35 @@
 <div class="container">
 
   <div class="manage">
-    <button (click)="submit()" >test</button>
-    <button (click)="shuffle()" >shuffle</button>
+    <div class="row">
+      <div class="col-4">
+        <label >Enter the speed:</label>
+        <ngx-slider style="color:#007BFF;" [(value)]="mintime" [options]="Time" ></ngx-slider>
+      </div>
+      <div class="col-4">
+        <label >Enter the Size of Array:</label>
+        <ngx-slider style="color:#007BFF;" [(value)]="minsize" [options]="Size" (userChange)="shuffle()"></ngx-slider>
+      </div>
+      <div class="col-4">
+        <label >Select Algorithm :</label>
+        <br>
+        <select class="box" [(ngModel)]="selectedAlgo" [disabled]="selecterDisable">
+          <option *ngFor="let algo of allAlgos" [value]="algo">
+            {{algo}}
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="manage">
+    <div class="row">
+      <div class="col-10"></div>
+      <div class="col-2" style="display: flex; justify-content: space-around;">
+        <button (click)="shuffle()" class="btn btn-primary" [disabled]="sortDisable">shuffle</button>
+        <button (click)="submit()" class="btn btn-primary" [disabled]="sortDisable">Sort</button>
+      </div>
+    </div>
   </div>
 
   <div class="row">

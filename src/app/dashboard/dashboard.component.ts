@@ -1,3 +1,4 @@
+import { Options } from '@angular-slider/ngx-slider/options';
 import { ChangeDetectionStrategy, Component, NgZone, OnInit } from '@angular/core';
 import { Color } from '@swimlane/ngx-charts';
 import { timer } from 'rxjs';
@@ -13,19 +14,31 @@ export class DashboardComponent implements OnInit {
 
   constructor(private zone:NgZone) { }
 
+
+  Time: Options = {
+    floor: 50,
+    ceil: 500
+  };
+
+  Size: Options = {
+    floor: 10,
+    ceil: 50,
+    disabled: false,
+  }
+
   allAlgos = [
     'Selection Sort',
     'Bubble Sort',
     'Insertion Sort',
     'Merge Sort',
-    'Quick Sort',
-    'Radix Sort'
+    'Quick Sort'
   ];
-  selectedAlgo;
-  numberOfElements;
+  selectedAlgo = 'Selection Sort';
+  sortDisable = false;
+  selecterDisable = false;
   saleData = [];
   customColor = [];
-  mintime = 20;
+  mintime = 50;
   minsize = 10;
 
   ngOnInit(): void {
@@ -64,16 +77,46 @@ export class DashboardComponent implements OnInit {
   }
 
   shuffle(){
-    window.location.reload()
+    this.saleData = this.getRandomList(this.minsize);
+    this.customColor = this.getColor([...this.saleData]);
   }
 
   submit(){
-    this.quickSorter();
+    this.Size = {
+      floor: 10,
+      ceil: 50,
+      disabled: true,
+    }
+    this.selecterDisable = true
+    switch(this.selectedAlgo){
+      case 'Selection Sort':
+        this.sortDisable = true;
+        this.selectionSort(this.saleData);
+        break;
+      case 'Bubble Sort':
+        this.sortDisable = true;
+        this.bubbleSort(this.saleData);
+        break;
+      case 'Insertion Sort':
+        this.sortDisable = true;
+        this.insertionSort(this.saleData);
+        break;
+      case 'Merge Sort':
+        this.sortDisable = true;
+        this.mergeSorter();
+        break;
+      case 'Quick Sort':
+        this.sortDisable = true;
+        this.quickSorter();
+        break;
+    }
   }
 
   // quickSort
   async quickSorter() {
     await this.quickSort(this.saleData,0,this.saleData.length-1);
+    this.enable()
+
   }
 
   async quickSort(arr: any[], f: number, l: number) {
@@ -112,6 +155,7 @@ export class DashboardComponent implements OnInit {
   // mergeSort
   async mergeSorter() {
     await this.mergeSort(this.saleData,0,this.saleData.length-1);
+    this.enable()
   }
 
 
@@ -220,6 +264,7 @@ export class DashboardComponent implements OnInit {
       this.customColor = [...this.customColor];
       await this.wait(this.mintime);
     }
+    this.enable()
   }
 
   // bubbleSort
@@ -247,6 +292,7 @@ export class DashboardComponent implements OnInit {
         }
       }
     }
+    this.enable()
   }
 
   // sellectionSort
@@ -275,6 +321,7 @@ export class DashboardComponent implements OnInit {
           await this.wait(2*this.mintime);
         }
     }
+    this.enable()
   }
 
   // Swap of two elements
@@ -292,6 +339,16 @@ export class DashboardComponent implements OnInit {
     this.changeColor(temp[i]["name"], '#007BFF');
     this.changeColor(temp[j]["name"], '#007BFF');
     this.customColor = [...this.customColor];
+  }
+
+  enable(){
+    this.Size = {
+      floor: 10,
+      ceil: 50,
+      disabled: false,
+    }
+    this.selecterDisable = false
+    this.sortDisable = false
   }
 }
 

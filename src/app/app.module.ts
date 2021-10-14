@@ -1,13 +1,14 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule } from '@angular/forms';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { NgxSliderModule } from '@angular-slider/ngx-slider';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { LayoutComponent } from './layout/layout.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { FormsModule } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { DarkmodeComponent } from './darkmode/darkmode.component';
 
 @NgModule({
@@ -21,6 +22,7 @@ import { DarkmodeComponent } from './darkmode/darkmode.component';
     BrowserModule,
     NgbModule,
     FormsModule,
+    NgxSliderModule,
     BrowserAnimationsModule,
     NgxChartsModule
   ],
