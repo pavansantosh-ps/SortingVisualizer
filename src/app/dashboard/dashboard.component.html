@@ -1,27 +1,26 @@
 <div class="container">
-  <div>
-    <app-darkmode></app-darkmode>
-  </div>
-
-  <div>
-    <ngx-charts-bar-vertical
-    [view]="[1000,400]"
-    [customColors]="customColor"
-    [results]="saleData"
-    [gradient]="true"
-    [animations]="false"
-    [tooltipDisabled]="true"
-    [yAxis]="true"
-    [showGridLines]="false"
-    [noBarWhenZero]="false"
-    style="fill: #007BFF;">
-    </ngx-charts-bar-vertical>
-  </div>
 
   <div>
     <button (click)="submit()" >test</button>
     <button (click)="shuffle()" >shuffle</button>
   </div>
 
+  <div class="row">
+    <!-- <div class="col-1"></div> -->
+    <div class="col-11 " style="height: 400px;">
+      <ngx-charts-bar-vertical
+      [customColors]="customColor"
+      [results]="saleData"
+      [gradient]="true"
+      [animations]="false"
+      [tooltipDisabled]="true"
+      [yAxis]="true"
+      [showGridLines]="false"
+      [noBarWhenZero]="false"
+      style="fill: #007BFF;">
+    </ngx-charts-bar-vertical>
+  </div>
+  <div class="col-1"></div>
+  </div>
 </div>
 
