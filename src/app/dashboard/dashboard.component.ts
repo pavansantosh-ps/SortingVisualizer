@@ -25,8 +25,8 @@ export class DashboardComponent implements OnInit {
   numberOfElements;
   saleData = [];
   customColor = [];
-  mintime = 100;
-  minsize = 15;
+  mintime = 20;
+  minsize = 10;
 
   ngOnInit(): void {
     this.saleData = this.getRandomList(this.minsize);
